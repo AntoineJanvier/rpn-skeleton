@@ -56,7 +56,7 @@ public class CLITest {
 
     @Test
     public void should_evaluate_bigger_division() {
-        assertThat(evaluate("5 2 10 / /")).isEqualTo(0.25);
+        assertThat(evaluate("5 2 / 10 /")).isEqualTo(0.25);
     }
 
     @Test
