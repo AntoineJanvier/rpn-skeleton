@@ -1,8 +1,8 @@
-package rpn;
+package rpn_esgi_lib;
 
 import java.util.Stack;
 
-import static rpn.RpnVerificator.isOperator;
+import static rpn_esgi_lib.RpnVerificator.isOperator;
 
 class RpnProcessor {
     static double processWithStack(String[] strings) {
@@ -38,8 +38,12 @@ class RpnProcessor {
         double first = Double.valueOf(strings[0]);
         double second = Double.valueOf(strings[1]);
         char op = '0';
-        for (String string : strings) if (isOperator(string)) { op = string.charAt(0);break; }
-        String [] ret = new String[strings.length - 2];
+        for (String string : strings)
+            if (isOperator(string)) {
+                op = string.charAt(0);
+                break;
+            }
+        String[] ret = new String[strings.length - 2];
         switch (op) {
             case '+':
                 ret[0] = String.valueOf(first + second);
@@ -62,5 +66,6 @@ class RpnProcessor {
             ret[i] = skipped ? strings[i + 2] : strings[i + 1];
         }
         return ret;
+
     }
 }

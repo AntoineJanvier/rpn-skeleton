@@ -1,5 +1,7 @@
 package rpn;
 
+import rpn_esgi_lib.RpnCalculator;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

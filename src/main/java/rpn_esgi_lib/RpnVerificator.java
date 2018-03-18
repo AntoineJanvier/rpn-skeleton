@@ -1,4 +1,4 @@
-package rpn;
+package rpn_esgi_lib;
 
 class RpnVerificator {
     static boolean isOperator(String s) {
