@@ -1,7 +1,5 @@
 package rpn;
 
-import rpn_esgi_lib.RpnCalculator;
-
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,6 +13,7 @@ public class CLI {
     }
 
     static double evaluate(String expression) {
+
         return RpnCalculator.evaluate(expression);
     }
 }
