@@ -1,41 +1,48 @@
 package rpn;
 
-import java.util.Queue;
-import java.util.Stack;
-
-import static java.lang.Math.abs;
+import java.util.*;
+import java.util.stream.Collectors;
 import static rpn.RpnVerificator.isOperator;
 
 class RpnProcessor {
-    static double processWithStack(String[] strings) {
-        Stack<Double> stack = new Stack<>();
-        //TODO : QUEU REPLACEMENT (need implmeent method)
-        //Queue<Double> queue = new Queue<Double>();
 
-        for (String s : strings) {
-            if (!isOperator(s)) stack.push(Double.valueOf(s));
-            else {
-                char op = s.charAt(0);
-                double a = stack.pop(), b = stack.pop();
-                switch (op) {
-                    case '+':
-                        a = b + a;
-                        break;
-                    case '-':
-                        a = b - a;
-                        break;
-                    case '*':
-                        a = b * a;
-                        break;
-                    case '/':
-                        a = b / a;
-                        break;
-                    default:
-                        break;
-                }
-                stack.push(a);
+    private Queue<String> queue = new LinkedList<String>();
+
+
+    static double processWithStack(String[] strings) {
+
+        List<Double> num = Arrays.stream(strings).filter(s -> !isOperator(s)).map(Double::valueOf).collect(Collectors.toList());
+        List<String> op = Arrays.stream(strings).filter(s -> isOperator(s)).collect(Collectors.toList());
+
+        for(int i=0; i < num.size(); i++){
+            if(i == num.size()-1){
+                return num.get(i);
+            }else{
+                num.set(i+1, calc(op.get(i),num.get(i), num.get(i+1)));
             }
         }
-        return stack.pop();
+        return 0.0;
     }
+
+    private static Double calc(String op, Double numberOne, Double numberTwo){
+        switch (op.charAt(0)) {
+            case '+':
+                return numberOne + numberTwo;
+            case '-':
+                return numberOne - numberTwo;
+            case '*':
+                return numberOne * numberTwo;
+            case '/':
+                if(numberOne == 0.0 || numberTwo == 0.0 ){
+                    new ArithmeticException("Denomitateur == 0!");
+                }
+                return numberOne / numberTwo;
+            default:
+                new IllegalArgumentException("op : " + op + " is not implemented");
+        }
+
+        return 0.0;
+    }
+
+
 }
