@@ -5,25 +5,19 @@ import java.util.stream.Collectors;
 
 class RpnProcessor {
 
-    private Queue<String> queue = new LinkedList<String>();
-
-
     static double processRPN(String[] strings) {
 
         List<Double> num = Arrays.stream(strings).filter(s -> !isOperator(s)).map(Double::valueOf).collect(Collectors.toList());
         List<String> op = Arrays.stream(strings).filter(s -> isOperator(s)).collect(Collectors.toList());
-        List<Double> numRevere = num.subList(0, num.size());
-        Collections.reverse(numRevere);
 
-
-        for(int i=0; i < num.size(); i++){
-            if(i == numRevere.size()-1){
-                return numRevere.get(i);
+        for(int i=num.size()-1, j=0; i >= 0; i--, j++){
+            if(i == 0){
+                return num.get(i);
             }else{
-                numRevere.set(i+1, calc(op.get(i),numRevere.get(i), numRevere.get(i+1)));
+                num.set(i-1, calc(op.get(j), num.get(i-1), num.get(i)));
             }
         }
-        return 0.0;
+       return -1;
     }
 
     private static Double calc(String op, Double numberOne, Double numberTwo){
