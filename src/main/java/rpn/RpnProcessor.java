@@ -15,6 +15,8 @@ class RpnProcessor {
         List<String> op = Arrays.stream(strings).filter(s -> isOperator(s)).collect(Collectors.toList());
         List<Double> numRevere = num.subList(0, num.size());
         Collections.reverse(numRevere);
+
+
         for(int i=0; i < num.size(); i++){
             if(i == numRevere.size()-1){
                 return numRevere.get(i);
