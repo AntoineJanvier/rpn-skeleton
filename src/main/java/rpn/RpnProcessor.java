@@ -2,14 +2,13 @@ package rpn;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import static rpn.RpnVerificator.isOperator;
 
 class RpnProcessor {
 
     private Queue<String> queue = new LinkedList<String>();
 
 
-    static double processWithStack(String[] strings) {
+    static double processRPN(String[] strings) {
 
         List<Double> num = Arrays.stream(strings).filter(s -> !isOperator(s)).map(Double::valueOf).collect(Collectors.toList());
         List<String> op = Arrays.stream(strings).filter(s -> isOperator(s)).collect(Collectors.toList());
@@ -35,15 +34,16 @@ class RpnProcessor {
                 return numberOne * numberTwo;
             case '/':
                 if(numberOne == 0.0 || numberTwo == 0.0 ){
-                    new ArithmeticException("Denomitateur == 0!");
+                    throw new ArithmeticException("Denomitateur == 0!");
                 }
                 return numberOne / numberTwo;
             default:
-                new IllegalArgumentException("op : " + op + " is not implemented");
+                throw new IllegalArgumentException("op : " + op + " is not implemented");
         }
-
-        return 0.0;
     }
 
+    private static boolean isOperator(String s) {
+        return s.length() == 1 && ("+".equals(s) || "-".equals(s) || "*".equals(s) || "/".equals(s));
+    }
 
 }
