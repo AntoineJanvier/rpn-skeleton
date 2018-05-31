@@ -4,21 +4,43 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class RpnProcessor {
+    private  List<TokenListenner> tokenListenners = new ArrayList<TokenListenner>();
+    private NumberListenner numberListenner = new NumberListenner();
+    private OperatorListener operatorListener = new OperatorListener();
+    private RpnListenner rpnListener = new RpnListenner();
 
-    static double processRPN(String[] strings) {
-
-        List<Double> num = Arrays.stream(strings).filter(s -> !isOperator(s)).map(Double::valueOf).collect(Collectors.toList());
-        List<String> op = Arrays.stream(strings).filter(s -> isOperator(s)).collect(Collectors.toList());
-
-        for(int i=num.size()-1, j=0; i >= 0; i--, j++){
-            if(i == 0){
-                return num.get(i);
-            }else{
-                num.set(i-1, calc(op.get(j), num.get(i-1), num.get(i)));
-            }
+    double processRPN(String[] strings) {
+        tokenListenners.add(operatorListener);
+        tokenListenners.add(numberListenner);
+        for(String token : strings){
+           notify(token);
         }
+
+        RpnListenner.getResponse(operatorListener), getResponse(numberListenner))
        return -1;
     }
+
+
+    private void notify(String s){
+
+        if(isOperator(s)){
+            for (TokenListenner listenner : tokenListenners){
+                listenner.addToken(s);
+            }
+        }else{
+            for (TokenListenner listenner : tokenListenners){
+                listenner.addToken(Double.parseDouble(s));
+            }
+        }
+
+
+
+    }
+
+    private List<?> getResponse(TokenListenner tokenListenner){
+        return tokenListenner.sendResult();
+    }
+
 
     private static Double calc(String op, Double numberOne, Double numberTwo){
         switch (op.charAt(0)) {
@@ -42,4 +64,9 @@ class RpnProcessor {
         return s.length() == 1 && ("+".equals(s) || "-".equals(s) || "*".equals(s) || "/".equals(s));
     }
 
+
+    /////
+
+
+    ////
 }
