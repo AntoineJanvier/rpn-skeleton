@@ -37,7 +37,7 @@ public class CLITest {
     @Test
     public void should_validate_bigger_substraction() {
 
-        assertThat(evaluate("2 5 7 - -")).isEqualTo(4);
+        assertThat(evaluate("2 5 7 - -")).isEqualTo(-10);
     }
 
     @Test
@@ -57,7 +57,17 @@ public class CLITest {
 
     @Test
     public void should_validate_bigger_division() {
-        assertThat(evaluate("5 2 10 / /")).isEqualTo(25);
+        assertThat(evaluate("5 2 10 / /")).isEqualTo(0.25);
+    }
+
+    @Test
+    public void should_validate_complex_expression() {
+        assertThat(evaluate("5 2 10 2 2.5 -1 + * / - *")).isEqualTo(-32.5);
+    }
+
+    @Test
+    public void should_validate_complex_expression_disordered() {
+        assertThat(evaluate("5 2 + 10 * 2 / 2.5 - -1 *")).isEqualTo(-32.5);
     }
 
     @Test
