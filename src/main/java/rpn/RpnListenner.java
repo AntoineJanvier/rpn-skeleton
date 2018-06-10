@@ -11,16 +11,16 @@ public class RpnListenner {
         List<String> op = operatorListener.getOperator();
         List<Double> num = numberListenner.getNumber();
 
-        for(int i=0; i < num.size(); i++){
-            if(i == num.size()-1){
+        for(int i=num.size()-1, j=0; i >= 0; i--, j++){
+            if(i == 0){
                  result.put("OK", num.get(i));
-                 return;
+                return;
             }else{
-                num.set(i+1, calc(op.get(i), num.get(i), num.get(i+1)));
+                num.set(i-1, calc(op.get(j), num.get(i-1), num.get(i)));
             }
-
-            result.put("NOK",0.0);
         }
+
+        result.put("NOK", 0.0);
 
     }
 

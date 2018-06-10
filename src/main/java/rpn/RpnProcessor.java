@@ -10,13 +10,13 @@ class RpnProcessor {
 
     private RpnListenner rpnListener = new RpnListenner();
 
-    double processRPN(String[] strings)  {
+    double processRPN(Token[] tokens)  {
         //On ajoute les listenners
         tokenListenners.add(operatorListener);
         tokenListenners.add(numberListenner);
 
-        for(String token : strings){
-           notify(token);
+        for(Token token : tokens){
+           notify(token.toString());
         }
         notify("EOF");
         return rpnListener.getFinalResult();

@@ -7,7 +7,7 @@ import java.util.List;
 public class NumberListenner implements TokenListenner {
 
     public List<Double> getNumber() {
-        Collections.reverse(number);
+        //Collections.reverse(number);
         return number;
     }
 
